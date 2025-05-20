@@ -1,0 +1,28 @@
+cabal-version:      3.0
+name:               aws-academy-grade-exporter
+version:            0.1.0.0
+synopsis:           Export grades from AWS Academy to different formats
+-- description:
+homepage:           https://github.com/aloussase/aws-academy-grade-exporter-hs
+license:            MIT
+license-file:       LICENSE
+author:             Alexander Goussas
+maintainer:         goussasalexander@gmail.com
+-- copyright:
+category:           Text
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall
+
+executable aws-academy-grade-exporter
+    import:           warnings
+    main-is:          Main.hs
+    other-modules:    Options, Row
+    -- other-extensions:
+    build-depends:    base ^>=4.17.2.1, optparse-applicative, postgresql-simple, cassava, bytestring, vector
+    hs-source-dirs:   src
+    default-language: Haskell2010
+    default-extensions: OverloadedStrings, DerivingStrategies, DeriveGeneric, DeriveAnyClass
