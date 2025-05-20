@@ -1,8 +1,8 @@
-module Options (parseOpts, Opt (..)) where
+module Options (parseOpts, Opt (..), Dest (..)) where
 
 import           Options.Applicative
 
-data Dest = Postgres
+data Dest = Postgres | Stdout
   deriving Show
 
 data Opt = MkOpt
@@ -28,6 +28,7 @@ opt = MkOpt
     readDest = eitherReader $ \s ->
       case s of
         "postgres" -> pure Postgres
+        "stdout"   -> pure Stdout
         _          -> Left "Invalid exporter"
 
 parseOpts :: IO Opt

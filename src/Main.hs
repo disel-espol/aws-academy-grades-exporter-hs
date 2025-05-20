@@ -3,6 +3,7 @@ module Main where
 import qualified Data.ByteString.Lazy.Char8 as BL8
 import           Data.Csv
 import qualified Data.Vector                as V
+import           Exporter
 import qualified Options
 import           Row
 import           System.IO                  (readFile')
@@ -14,8 +15,12 @@ readRows fileName = do
     Left err -> error err
     Right v  -> return $ V.toList v
 
+doExport :: Options.Dest -> [Row] -> IO ()
+doExport Options.Postgres rows = undefined
+doExport Options.Stdout rows   = Exporter.ehExport stdoutExporter $ rows
+
 main :: IO ()
 main = do
   opts <- Options.parseOpts
   rows <- readRows (Options.optFile opts)
-  print rows
+  doExport (Options.optDest opts) rows
