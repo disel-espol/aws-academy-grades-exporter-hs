@@ -20,7 +20,7 @@ common warnings
 executable aws-academy-grade-exporter
     import:           warnings
     main-is:          Main.hs
-    other-modules:    Options, Row, Exporter
+    other-modules:    Options, Row, Exporter, Pg
     -- other-extensions:
     build-depends:    base ^>=4.17.2.1, optparse-applicative, postgresql-simple, cassava, bytestring, vector
     hs-source-dirs:   src

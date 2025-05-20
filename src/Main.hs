@@ -16,7 +16,7 @@ readRows fileName = do
     Right v  -> return $ V.toList v
 
 doExport :: Options.Dest -> [Row] -> IO ()
-doExport Options.Postgres rows = undefined
+doExport Options.Postgres rows = Exporter.ehExport postgresExporter $ rows
 doExport Options.Stdout rows   = Exporter.ehExport stdoutExporter $ rows
 
 main :: IO ()
