@@ -1,5 +1,6 @@
 module Pg where
 
+import           Control.Monad              (void)
 import qualified Data.ByteString.Char8      as BL8
 import           Database.PostgreSQL.Simple
 import           Row
@@ -12,7 +13,11 @@ connect = do
   return conn
 
 insertRows :: Connection -> [Row] -> IO  ()
-insertRows conn rows = undefined
+insertRows conn rows = void $
+  executeMany
+    conn
+    "insert into grades values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+    rows
 
 disconnect :: Connection -> IO ()
 disconnect conn = close conn
