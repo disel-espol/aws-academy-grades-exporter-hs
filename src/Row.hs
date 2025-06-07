@@ -2,7 +2,8 @@ module Row where
 
 
 import           Data.Csv
-import           GHC.Generics (Generic)
+import           Database.PostgreSQL.Simple.ToRow
+import           GHC.Generics                     (Generic)
 
 data Row = MkRow
   { rStudent                         :: !String
@@ -54,5 +55,6 @@ data Row = MkRow
   , rUnpostedFinalScore              :: !(Maybe Double)
   }
   deriving stock (Show, Generic)
+  deriving anyclass (ToRow)
 
 instance FromRecord Row
