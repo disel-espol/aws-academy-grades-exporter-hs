@@ -47,3 +47,9 @@ create table grades (
   "rFinalScore"                      decimal,
   "rUnpostedFinalScore"              decimal
 );
+
+create table students (
+  "rStudent"      text not null primary key,
+  "rNombres"      text not null,
+  "rApellidos"    text not null
+);
