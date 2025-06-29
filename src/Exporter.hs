@@ -1,21 +1,10 @@
-module Exporter where
+module Exporter (ExporterHandle(..)) where
 
-import           Control.Exception
-import qualified Pg
-import           Row
+import           Types
 
 data ExporterHandle = ExporterHandle
-  { ehExport :: [Row] -> IO ()
+  { ehExport :: Header -> Rows -> IO ()
   }
 
 
-stdoutExporter :: ExporterHandle
-stdoutExporter = ExporterHandle print
-
-postgresExporter :: ExporterHandle
-postgresExporter = ExporterHandle $ \rows -> do
-  bracket
-    (Pg.connect)
-    (Pg.disconnect)
-    (\conn -> Pg.insertRows conn rows)
 

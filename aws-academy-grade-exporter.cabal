@@ -31,9 +31,10 @@ executable aws-academy-grade-exporter
   main-is:            Main.hs
   other-modules:
     Exporter
+    Exporter.Postgres
+    Exporter.Stdout
     Options
-    Pg
-    Row
+    Types
 
   -- other-extensions:
   build-depends:
@@ -54,3 +55,6 @@ executable aws-academy-grade-exporter
     DeriveGeneric
     DerivingStrategies
     OverloadedStrings
+    ScopedTypeVariables
+    TemplateHaskell
+

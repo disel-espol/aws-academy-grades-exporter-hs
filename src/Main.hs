@@ -1,26 +1,47 @@
 module Main where
 
-import qualified Data.ByteString.Lazy.Char8 as BL8
-import           Data.Csv
-import qualified Data.Vector                as V
+import qualified Data.Text         as T
+import qualified Data.Text.IO      as TIO
 import           Exporter
+import qualified Exporter.Postgres as Postgres
+import qualified Exporter.Stdout   as Stdout
 import qualified Options
-import           Row
-import           System.IO                  (readFile')
+import           Types
 
-readRows :: FilePath -> IO [Row]
+readRows :: FilePath -> IO (Header, Rows)
 readRows fileName = do
-  contents <- readFile' fileName
-  case decode HasHeader $ BL8.pack contents of
-    Left err -> error err
-    Right v  -> return $ V.toList v
+  contents <- TIO.readFile fileName
+  let (header, contents') = T.breakOn "\n" contents
+  let header' = T.splitOn "," header
+  let rows = map (T.splitOn ",") (drop 1 $ T.lines contents')
+  return (header', rows)
 
-doExport :: Options.Dest -> [Row] -> IO ()
-doExport Options.Postgres rows = Exporter.ehExport postgresExporter $ rows
-doExport Options.Stdout rows   = Exporter.ehExport stdoutExporter $ rows
+doExport :: Options.Dest -> Header -> Rows -> IO ()
+doExport Options.Postgres header rows = Exporter.ehExport Postgres.exporter header rows
+doExport Options.Stdout   header rows = Exporter.ehExport Stdout.exporter header rows
 
 main :: IO ()
 main = do
   opts <- Options.parseOpts
-  rows <- readRows (Options.optFile opts)
-  doExport (Options.optDest opts) rows
+  (header, rows) <- readRows (Options.optFile opts)
+  doExport (Options.optDest opts) header rows
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
