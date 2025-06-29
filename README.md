@@ -35,5 +35,20 @@ Available options:
   -h,--help                Show this help text
 ```
 
+## Sinks
+
+### Stdout
+
+Just prints the data to standard output.
+
+### PostgreSQL
+
+Will create tables based on the input data and populate them with the fields in
+the file. It will additionally fetch the students' name and last name and
+insert it in the table for easier mapping in AulaVirtual.
+
+> [!NOTE]
+> This sink requires a `DB_URL` environment variable to be set.
+
 ## License
 MIT
